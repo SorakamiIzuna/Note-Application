@@ -17,6 +17,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^12.3.2"
+    "inquirer": "^12.3.2",
+    "mongoose": "^8.9.5"
   }
 }

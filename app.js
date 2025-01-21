@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
-const connectDB =require('./routes/notesRoutes');
+const connectDB = require('./config/db')
+const notesRoutes =require('./routes/notesRoutes');
 require("./config/db")
 require('dotenv').config
 
@@ -10,7 +11,8 @@ connectDB()
 // Cấu hình EJS
 app.set('view engine', 'ejs');
 app.set('views', './views');
-
+app.use(express.json());  // For parsing application/json
+app.use(express.urlencoded({ extended: true }));
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public')); // Chứa các file tĩnh (CSS, JS)
