@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
-const notesRoutes = require('./routes/notesRoutes');
+const connectDB =require('./routes/notesRoutes');
+require("./config/db")
+require('dotenv').config
 
 const app = express();
-
+connectDB()
 // Cấu hình EJS
 app.set('view engine', 'ejs');
 app.set('views', './views');
@@ -22,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 // Chạy server
-const PORT = 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(chalk.green(`Server đang chạy tại http://localhost:${PORT}`));
+  console.log(chalk.green(`Server is running at http://localhost:${PORT}`));
 });
