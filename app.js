@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const connectDB = require('./config/db')
-const notesRoutes =require('./routes/notesRoutes');
+const noteRoutes =require('./routes/notesRoutes');
 require("./config/db")
 require('dotenv').config
 
@@ -18,12 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public')); // Chứa các file tĩnh (CSS, JS)
 
 // Sử dụng routes
-app.use('/notes', notesRoutes);
-
-// Trang chủ
-app.get('/', (req, res) => {
-  res.redirect('/notes');
-});
+app.use('/', noteRoutes);
 
 // Chạy server
 const PORT = process.env.PORT;

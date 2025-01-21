@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const notesController = require('../controllers/notesController');
+const noteController = require('../controllers/noteController');
 
-// Route để liệt kê ghi chú
-router.get('/', notesController.listNotes);
-
-// Route để thêm ghi chú
-router.post('/create', notesController.createNote);
-
-// Route để xóa ghi chú
-router.post('/:id/delete', notesController.deleteNote);
-
-// Route để hủy chia sẻ ghi chú
-router.post('/:id/unshare', notesController.unshareNote);
+router.get('/', noteController.index);
+router.get('/add', noteController.addNoteForm);
+router.post('/add', noteController.createNote);
+router.get('/edit/:id', noteController.editNoteForm);
+router.post('/edit/:id', noteController.updateNote);
+router.get('/delete/:id', noteController.deleteNote);
 
 module.exports = router;
