@@ -13,6 +13,6 @@ const shareSchema = new mongoose.Schema({
 });
 
 // Tạo Model Note từ Schema
-const shareNote = mongoose.model('Share', shareSchema, 'Note');
+const shareNote = mongoose.model('Share', shareSchema, 'Share');
 
 module.exports = shareNote;
