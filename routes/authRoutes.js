@@ -12,7 +12,7 @@ router.post('/register', authController.postRegister);
 router.get('/logout', authController.logout);
 
 router.get('/dashboard', authenticateToken, async (req, res) => {
-    const notes = await Note.find();
+    const notes = await Note.find({ userId: req.user.id });
     res.render('dashboard', { user: req.user , notes: notes },);
 });
 
