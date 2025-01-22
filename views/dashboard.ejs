@@ -8,13 +8,24 @@
 </head>
 <body>
     <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1>Welcome, <%= user.username %>!</h1>
-            <a href="/auth/logout" class="btn btn-danger">Logout</a>
-        </div>
-        <div class="mt-4">
-            <p>This is your dashboard. You can add more content here!</p>
-        </div>
+        <nav>
+            <button><a href="/auth/login">Login</a></button>
+            <button><a href="/auth/register">Register</a></button>
+            <button><a href=""><%= user.username %></a></button>
+          </nav>
+          <h1>Notes</h1>
+          <a href="/add">Add New Note</a>
+          <ul>
+            <% notes.forEach(note => { %>
+              <li>
+                <h2><%= note.title %></h2>
+                <p><%= note.content %></p>
+                <a href="/edit/<%= note._id %>">Edit</a>
+                <a href="/delete/<%= note._id %>">Delete</a>
+              </li>
+            <% }) %>
+          <!--Thiếu Share-->
+          </ul>
     </div>
 </body>
 </html>
