@@ -3,7 +3,6 @@ const Note = require('../models/noteModels.js');
 const share = require('../models/shareModels.js')
 const cryptoUtils = require('../models/aes.js')
 const crypto = require('crypto');
-
 // Show all notes
 exports.index = async (req, res) => {
   try {
@@ -38,7 +37,7 @@ exports.createNote = async (req, res) => {
 
     // Save the encrypted note
     const newNote = new Note({
-      _id: noteId,
+      _id:noteId,
       creator: user,
       title,
       content: encryptedData.encryptedNote, // Save encrypted content
