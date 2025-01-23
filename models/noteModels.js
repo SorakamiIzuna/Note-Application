@@ -26,6 +26,10 @@ const noteSchema = new mongoose.Schema({
     type: Date,
     default: new Date(0), // Chưa hết hạn mặc định
   },
+  iv: { 
+    type: String,
+    required: true 
+  }, // Initialization Vector
 });
 
 // Tạo Model Note từ Schema
