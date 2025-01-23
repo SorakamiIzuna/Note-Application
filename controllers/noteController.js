@@ -61,7 +61,21 @@ exports.editNoteForm = async (req, res) => {
     if (!note) {
       return res.status(404).send('Note not found');
     }
-    res.render('editNote', { note });
+    const sessionKey = Buffer.from(note.access_token, 'hex');
+      const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, note._id.toString());
+      const decryptedContent = cryptoUtils.decryptNote(
+        { encryptedNote: note.content, iv: note.iv },
+        uniqueKey
+      );
+    const decryptedNote = new Note({
+      _id:note.id,
+      creator:note.creator,
+      title:note.title,
+      content:decryptedContent,
+      iv: note.iv, // Save the IV
+      access_token: note.access_token,
+    })
+    res.render('editNote', { note: decryptedNote });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');

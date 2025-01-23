@@ -34,7 +34,7 @@ function encryptNote(note, uniqueKey) {
 
     let encrypted = cipher.update(note, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-
+    
     return {
         encryptedNote: encrypted,
         iv: iv.toString('hex') // Gửi IV kèm theo
