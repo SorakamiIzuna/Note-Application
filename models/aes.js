@@ -54,36 +54,9 @@ function decryptNote(encryptedData, uniqueKey) {
 
     return decrypted;
 }
-
-try {
-    console.log("1. Tạo khóa phiên (1024-bit)...");
-    const sessionKey = generateSessionKeys();
-
-    console.log("\n2. Mã hóa các ghi chú...");
-
-    const notes = [
-        { id: "note1", content: "Đây là ghi chú số 1." },
-        { id: "note2", content: "Đây là ghi chú số 2" },
-        { id: "note3", content: "Đây là ghi chú số 3" }
-    ];
-
-    const encryptedNotes = notes.map(note => {
-        const uniqueKey = generateUniqueKeyForNote(sessionKey, note.id); // Tạo khóa riêng cho ghi chú
-        const encryptedData = encryptNote(note.content, uniqueKey);
-        return { id: note.id, encryptedData };
-    });
-
-    console.log("Dữ liệu đã mã hóa:", encryptedNotes);
-
-    console.log("\n3. Giải mã các ghi chú...");
-
-    const decryptedNotes = encryptedNotes.map(({ id, encryptedData }) => {
-        const uniqueKey = generateUniqueKeyForNote(sessionKey, id); // Lấy lại khóa riêng của ghi chú
-        const decryptedContent = decryptNote(encryptedData, uniqueKey);
-        return { id, content: decryptedContent };
-    });
-
-    console.log("Dữ liệu đã giải mã:", decryptedNotes);
-} catch (error) {
-    console.error("Đã xảy ra lỗi:", error.message);
-}
+module.exports = {
+    generateSessionKeys,
+    generateUniqueKeyForNote,
+    encryptNote,
+    decryptNote
+};
