@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Định nghĩa Schema cho ghi chú
 const noteSchema = new mongoose.Schema({
+  _id: String,
   creator: {
     type: String,
     required: true,
