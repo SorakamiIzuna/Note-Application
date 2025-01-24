@@ -4,38 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <nav>
-            <button><a href=""><%= user.username %></a></button>
-        </nav>
-          <h1>Your Notes</h1>
-          <a href="/add">Add New Note</a>
-          <ul>
-            <% notes.forEach(note => { %>
-              <li>
-                <h2><%= note.title %></h2>
-                <p><%= note.content %></p>
-                <a href="/edit/<%= note._id %>">Edit</a>
-                <a href="/delete/<%= note._id %>">Delete</a>
-                <a href="/share/<%= note._id %>?iv=<%= encodeURIComponent(note.iv) %>">Share</a>
-              </li>
-            <% }) %>
-          </ul>
-          <h1>Shared Notes</h1>
-          <ul>
-            <% sharedNotes.forEach(note => { %>
-              <li>
-                  <h2><%= note.title %></h2>
-                  <p><%= note.content %></p>
-                  <p><%= note.iv %></p>
-                  <p><%= note.url %></p>
-                  <a href="<%= note.url %>">View</a>
-              </li>
-            <% }) %>
-          </ul>
+  <header>
+    <div class="container">
+      <h1 class="logo"></h1>
+      <nav>
+        <ul>
+          <li><a href=""><%= user.username %></li>
+        </ul>
+      </nav>
     </div>
+  </header>
+  <h1 class="title">Notes</h1>
+  <div class="addbtn"><button><a href="/add"> + New Note</a></button></div>
+  <ul class="note-list">
+    <% notes.forEach(note => { %>
+      <li class="note">
+        <h2><%= note.title %></h2>
+        <p><%= note.content %></p>
+        <div class="actions">
+          <a href="/edit/<%= note._id %>">Edit</a>
+          <a href="/delete/<%= note._id %>">Delete</a>
+          <a href="/share/<%= note._id %>">Share</a>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+  <h1 class="title">Shared Notes</h1>
+  <ul class="note-list">
+    <% sharedNotes.forEach(note => { %>
+    <li class="note">
+        <h2><%= note.title %></h2>
+        <p><%= note.content %></p>
+        <p><%= note.iv %></p>
+        <p><%= note.url %></p>
+        <a href="<%= note.url %>">View</a>
+    </li>
+      <% }) %>
+    </ul>
 </body>
 </html>

@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+@import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
+body {
+	margin: 0;
+	background: #222;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 800;
+}
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+header {
+  /* background: #55d6aa; */
+  background: rgba(194, 193, 193, 0.667);
+}
+
+header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  padding: 10px 0;
+}
+
+nav {
+  float: right;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 70px;
+  padding-top: 23px;
+
+  position: relative;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #9af085cb;
+}
+
+nav a::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background-color: #444;
+
+  position: absolute;
+  top: 0;
+  width: 0%;
+
+  transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+.note{
+    width: 40vh;
+    height:40vh;
+    border: 2px solid black;
+    background-color: rgb(255, 204, 0);
+    padding: 20px;
+    margin: 10px 10px;
+    border-radius:5px;
+    font-family: 'Reenie Beanie';
+    display: flex;
+    flex-direction: column;
+    box-shadow: #444;
+}
+.note:hover{
+    scale:1.05;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.note p{
+    margin:0 10px;
+    font-size: 25px;
+    word-wrap: break-word; /* Allows words to break if necessary */
+    white-space: normal;   /* Ensures text wraps normally */
+    overflow-wrap: break-word;
+}
+.note h2{
+    margin:0;
+    font-weight: bold;
+    font-size: 40px;
+    font-weight: bold;
+}
+.note .actions {
+    margin-left:auto;
+    margin-top: auto; /* Push actions to the bottom */
+    display: flex; /* Align links horizontally */
+    gap: 5px; /* Add spacing between links */
+  }
+  
+.note .actions a {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+  
+/* .note a{
+    text-decoration: none;
+    color:black;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    font-size: 20px;
+} */
+/* .note a:nth-last-child(2){
+    right: calc(60px + 5px);
+} */
+.note a:hover{
+    color:blue;
+}
+.note-list{
+    display:flex;
+    flex-wrap: wrap;
+}
+.title{
+    font-family: 'Reenie Beanie';
+    width:100%;
+    height:10vh;
+    display: flex;
+    justify-content: center;
+    color:white;
+    font-size: 100px;
+    padding:0;
+}
+.addbtn{
+    width:100%;
+    display: flex;
+    flex-direction: row-reverse;
+    font-family: 'Reenie Beanie';
+}
+.addbtn button{
+    width:130px;
+    height:35px;
+    margin-right:50px;
+    background: gray;
+    border-radius: 5px;
+    border:none
+}
+.addbtn a{
+    color:white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+}
+.addbtn button:hover{
+    scale: 1.2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.form-container{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius:5px;
+    font-family: 'Reenie Beanie';
+    font-size: 25px;
+}
+.form-container form{
+    width:50%;
+    background-color:rgb(255, 204, 0);
+    display: flex;
+    flex-direction: column;
+    padding:20px;
+    border-radius: 10px;
+    border: 1px 5px solid black;
+}
+#title{
+    border-radius: 5px;
+    height: 30px;
+}
+#content{
+    border-radius: 5px;
+    height: 90px;
+}
+.form-container button{
+    align-self: center;
+    width:20vw;
+    height:40px;
+    border-radius: 5px;
+    font-family: 'Reenie Beanie';
+    font-size: 30px;
+}
