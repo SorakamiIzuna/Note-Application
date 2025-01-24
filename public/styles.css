@@ -14,7 +14,8 @@ body {
 
 header {
   /* background: #55d6aa; */
-  background: rgba(194, 193, 193, 0.667);
+  /* background: rgba(194, 193, 193, 0.667); */
+  background-color: rgb(255, 204, 0);
 }
 
 header::after {
@@ -75,8 +76,8 @@ nav a:hover::before {
 }
 
 .note{
-    width: 40vh;
-    height:40vh;
+    width: 35vh;
+    height:35vh;
     border: 2px solid black;
     background-color: rgb(255, 204, 0);
     padding: 20px;
