@@ -1,10 +1,5 @@
 const User = require('../models/userModel');
-const jwt = require('jsonwebtoken');
-
-// Tạo token JWT
-const generateToken = (user) => {
-    return jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '7d' });
-};
+const jwt = require('../config/jwt');
 
 exports.getLogin = (req, res) => {
     res.render('login', { error: null });
@@ -39,7 +34,8 @@ exports.postLogin = async (req, res) => {
             return res.render('login', { error: 'Invalid username or password' });
         }
 
-        const token = generateToken(user);
+        // Tạo token và lưu vào cookie
+        const token = jwt.generateToken(user);
         res.cookie('token', token, { httpOnly: true });
         res.redirect('/auth/dashboard');
     } catch (error) {
