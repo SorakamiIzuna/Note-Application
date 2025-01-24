@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 // Định nghĩa Schema cho ghi chú
 const shareSchema = new mongoose.Schema({
-  note_id: {
-    type: String,
-    required: true,
-  },
+  // note_id: {
+  //   type: String,
+  //   required: true,
+  // },
+  _id: String,
   url:{
     type:String,
     require: true,
