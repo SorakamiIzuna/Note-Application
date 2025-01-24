@@ -137,8 +137,9 @@ exports.shareNote = async (req, res) => {
 exports.getSharedNote = async (currentUser) => {
   try {
     const notes = await share.find();
+    const availableSharedNote = notes.filter(note => sharedNoteUrl.verifyURL(note.url));
     const sharedNote = await Promise.all(
-      notes.map(async (findNote) => {
+      availableSharedNote.map(async (findNote) => {
         const note = await Note.findById(findNote._id);
         if (note && note.creator !== currentUser) {
           return {
@@ -200,3 +201,41 @@ exports.getNote = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
+
+exports.viewSharedNote = async (req, res) => {
+  const noteId = req.params.id;
+  const fullUrl = `http://localhost:3000${req.originalUrl}`;
+  const checkValid = sharedNoteUrl.verifyURL(fullUrl);
+  if (checkValid) {
+    try {
+      const note = await Note.findById(noteId);
+      if (note) {
+        const sessionKey = Buffer.from(note.access_token, 'hex');
+        const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, noteId);
+        const decryptedContent = cryptoUtils.decryptNote(
+          { encryptedNote: note.content, iv: note.iv },
+          uniqueKey
+        );
+        const decryptedNote = new Note({
+          _id: note.id,
+          creator: note.creator,
+          title: note.title,
+          content: decryptedContent,
+          iv: note.iv, // Save the IV
+          access_token: note.access_token,
+        })
+        res.render('viewNote', { note: decryptedNote });
+      }
+      else {
+        res.status(404).send('Note not found');
+      }
+    }
+    catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    }
+  }
+  else {
+    res.status(401).send('This note is not available');
+  }
+}

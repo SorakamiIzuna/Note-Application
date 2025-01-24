@@ -15,7 +15,7 @@ const generateURL = (noteID, expirationSeconds, iv) => {
     const data = `${noteID}:${expirationTimestamp}`;
     const signature = crypto.createHmac('sha256', SECRET_KEY).update(data).digest('hex');
 
-    const baseURL = 'http://localhost:3000';
+    const baseURL = 'http://localhost:3000/view';
     const url = `${baseURL}/${noteID}?expires=${expirationTimestamp}&iv=${iv}&signature=${signature}`;
     return url;
 }
