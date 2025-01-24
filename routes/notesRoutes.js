@@ -12,4 +12,5 @@ router.post('/edit/:id',authenticateToken, noteController.updateNote);
 router.get('/delete/:id',authenticateToken, noteController.deleteNote);
 router.get('/share/:id',authenticateToken, noteController.shareNote);
 router.get('/dashboard', authenticateToken, noteController.getNote);
+router.get('/view/:id', noteController.viewSharedNote);
 module.exports = router;

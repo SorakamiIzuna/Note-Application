@@ -11,7 +11,7 @@
         <nav>
             <button><a href=""><%= user.username %></a></button>
         </nav>
-          <h1>Notes</h1>
+          <h1>Your Notes</h1>
           <a href="/add">Add New Note</a>
           <ul>
             <% notes.forEach(note => { %>
@@ -20,10 +20,21 @@
                 <p><%= note.content %></p>
                 <a href="/edit/<%= note._id %>">Edit</a>
                 <a href="/delete/<%= note._id %>">Delete</a>
-                <a href="/share/<%= note._id %>">Share</a>
+                <a href="/share/<%= note._id %>?iv=<%= encodeURIComponent(note.iv) %>">Share</a>
               </li>
             <% }) %>
-          <!--Thiếu Share-->
+          </ul>
+          <h1>Shared Notes</h1>
+          <ul>
+            <% sharedNotes.forEach(note => { %>
+              <li>
+                  <h2><%= note.title %></h2>
+                  <p><%= note.content %></p>
+                  <p><%= note.iv %></p>
+                  <p><%= note.url %></p>
+                  <a href="<%= note.url %>">View</a>
+              </li>
+            <% }) %>
           </ul>
     </div>
 </body>

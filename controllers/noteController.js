@@ -1,6 +1,7 @@
 // controllers/noteController.js
 const Note = require('../models/noteModels.js');
 const share = require('../models/shareModels.js')
+const sharedNoteUrl = require('../models/tempURLModels.js');
 const cryptoUtils = require('../models/aes.js')
 const crypto = require('crypto');
 // Show all notes
@@ -16,7 +17,7 @@ exports.index = async (req, res) => {
 
 // Show the form to add a new note
 exports.addNoteForm = (req, res) => {
-  res.render('addNote',{user:req.user});
+  res.render('addNote', { user: req.user });
 };
 
 // Create a new note
@@ -37,7 +38,7 @@ exports.createNote = async (req, res) => {
 
     // Save the encrypted note
     const newNote = new Note({
-      _id:noteId,
+      _id: noteId,
       creator: user,
       title,
       content: encryptedData.encryptedNote, // Save encrypted content
@@ -62,16 +63,16 @@ exports.editNoteForm = async (req, res) => {
       return res.status(404).send('Note not found');
     }
     const sessionKey = Buffer.from(note.access_token, 'hex');
-      const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, note._id.toString());
-      const decryptedContent = cryptoUtils.decryptNote(
-        { encryptedNote: note.content, iv: note.iv },
-        uniqueKey
-      );
+    const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, note._id.toString());
+    const decryptedContent = cryptoUtils.decryptNote(
+      { encryptedNote: note.content, iv: note.iv },
+      uniqueKey
+    );
     const decryptedNote = new Note({
-      _id:note.id,
-      creator:note.creator,
-      title:note.title,
-      content:decryptedContent,
+      _id: note.id,
+      creator: note.creator,
+      title: note.title,
+      content: decryptedContent,
       iv: note.iv, // Save the IV
       access_token: note.access_token,
     })
@@ -121,21 +122,46 @@ exports.deleteNote = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
-exports.shareNote = async (req,res) =>{
-  try{
-    const note_id = req.params.id
-    const url = "this is url"
-    const shareNote = new share({note_id, url})
-    await shareNote.save()
+exports.shareNote = async (req, res) => {
+  try {
+    const response = await sharedNoteUrl.addURLToDatabase(req.params.id, req.query.iv);
+    console.log("Share?: ", response);
     res.redirect('/dashboard')
-  } catch(err){
+  } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 }
+
+// Lấy Note được chia sẻ
+exports.getSharedNote = async (currentUser) => {
+  try {
+    const notes = await share.find();
+    const availableSharedNote = notes.filter(note => sharedNoteUrl.verifyURL(note.url));
+    const sharedNote = await Promise.all(
+      availableSharedNote.map(async (findNote) => {
+        const note = await Note.findById(findNote._id);
+        if (note && note.creator !== currentUser) {
+          return {
+            ...note.toObject(),
+            url: findNote.url,
+          }
+        }
+        return null;
+      }
+      )
+    )
+    return sharedNote.filter(note => note !== null);
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
 exports.getNote = async (req, res) => {
   try {
-    const notes = await Note.find({creator:req.user.username});
+    const notes = await Note.find({ creator: req.user.username });
+    const sharedNotes = await this.getSharedNote(req.user.username);
 
     // Decrypt each note
     const decryptedNotes = notes.map((note) => {
@@ -153,10 +179,63 @@ exports.getNote = async (req, res) => {
       };
     });
 
-    res.render('dashboard', { user: req.user, notes: decryptedNotes });
+    // Decrypt shared notes
+    const decryptedSharedNotes = sharedNotes.map((note) => {
+      // Retrieve session key and IV
+      const sessionKey = Buffer.from(note.access_token, 'hex');
+      const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, note._id.toString());
+      const decryptedContent = cryptoUtils.decryptNote(
+        { encryptedNote: note.content, iv: note.iv },
+        uniqueKey
+      );
+
+      return {
+        ...note,
+        content: decryptedContent, // Replace encrypted content with decrypted content
+      };
+    });
+
+    res.render('dashboard', { user: req.user, notes: decryptedNotes, sharedNotes: decryptedSharedNotes });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
 };
 
+exports.viewSharedNote = async (req, res) => {
+  const noteId = req.params.id;
+  const fullUrl = `http://localhost:3000${req.originalUrl}`;
+  const checkValid = sharedNoteUrl.verifyURL(fullUrl);
+  if (checkValid) {
+    try {
+      const note = await Note.findById(noteId);
+      if (note) {
+        const sessionKey = Buffer.from(note.access_token, 'hex');
+        const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, noteId);
+        const decryptedContent = cryptoUtils.decryptNote(
+          { encryptedNote: note.content, iv: note.iv },
+          uniqueKey
+        );
+        const decryptedNote = new Note({
+          _id: note.id,
+          creator: note.creator,
+          title: note.title,
+          content: decryptedContent,
+          iv: note.iv, // Save the IV
+          access_token: note.access_token,
+        })
+        res.render('viewNote', { note: decryptedNote });
+      }
+      else {
+        res.status(404).send('Note not found');
+      }
+    }
+    catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    }
+  }
+  else {
+    res.status(401).send('This note is not available');
+  }
+}
