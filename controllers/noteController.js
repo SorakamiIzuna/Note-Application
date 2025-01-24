@@ -135,7 +135,7 @@ exports.shareNote = async (req,res) =>{
 }
 exports.getNote = async (req, res) => {
   try {
-    const notes = await Note.find();
+    const notes = await Note.find({creator:req.user.username});
 
     // Decrypt each note
     const decryptedNotes = notes.map((note) => {
