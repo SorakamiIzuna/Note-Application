@@ -247,3 +247,12 @@ nav a:hover::before {
 .home a:hover{
   color:blue;
 }
+.error{
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.alert{
+  color:red;
+}
