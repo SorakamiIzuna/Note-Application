@@ -26,6 +26,7 @@ app.use('/auth', authRoutes);
 
 // Chạy server
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(chalk.green(`Server is running at http://localhost:${PORT}`));
-});
+// app.listen(PORT, () => {
+//   console.log(chalk.green(`Server is running at http://localhost:${PORT}`));
+// });
+module.exports = app;

@@ -1,0 +1,107 @@
+{
+    "register": [
+      {
+        "username": "newuser5",
+        "password": "password123",
+        "expectedStatus": 302,
+        "expectedLocation": "/auth/login"
+      },
+      {
+        "username": "existinguser",
+        "password": "password123",
+        "expectedStatus": 200,
+        "expectedText": "Username already exists"
+      }
+    ],
+    "login": [
+      {
+        "username": "newuser5",
+        "password": "password123",
+        "expectedStatus": 302,
+        "expectedLocation": "/dashboard"
+      },
+      {
+        "username": "nonexistentuser",
+        "password": "wrongpassword",
+        "expectedStatus": 200,
+        "expectedText": "Invalid username or password"
+      }
+    ],
+    "sessionKeyTest": {
+    "expectedLength": 32
+    },
+    "uniqueKeyTest": {
+        "noteId": "note1",
+        "expectedLength": 32
+    },
+    "encryptionDecryptionTest": {
+        "noteContent": "This is a sample note for testing",
+        "expectedDecryptedContent": "This is a sample note for testing"
+    },
+    "sharedSecretMismatchTest": {
+        "noteId": "note1"
+    },
+    "generateURL": [
+        {
+          "noteID": "testNote123",
+          "expirationSeconds": 3600,
+          "iv": "testIV123",
+          "expectedSubstring": "http://localhost:3000/view/testNote123"
+        }
+      ],
+      "verifyURL": [
+        {
+          "description": "Valid URL",
+          "noteID": "validNote123",
+          "expirationSeconds": 3600,
+          "iv": "testIV123",
+          "isValid": true
+        },
+        {
+          "description": "Expired URL",
+          "noteID": "expiredNote123",
+          "expirationSeconds": -3600,
+          "iv": "testIV123",
+          "isValid": false
+        },
+        {
+          "description": "Tampered URL",
+          "noteID": "tamperedNote123",
+          "expirationSeconds": 3600,
+          "iv": "testIV123",
+          "tamper": true,
+          "isValid": false
+        }
+      ],
+      "addURLToDatabase": [
+        {
+          "description": "Create new URL for a non-existent note",
+          "noteID": "newNote123",
+          "iv": "testIV123",
+          "existingNote": null,
+          "shouldUpdate": true
+        },
+        {
+          "description": "Update expired URL in database",
+          "noteID": "expiredNoteInDB123",
+          "iv": "testIV123",
+          "existingNote": {
+            "_id": "expiredNoteInDB123",
+            "url": "expiredURL"
+          },
+          "shouldUpdate": true
+        },
+        {
+          "description": "Do not update valid URL in database",
+          "noteID": "validNoteInDB123",
+          "iv": "testIV123",
+          "existingNote": {
+            "_id": "validNoteInDB123",
+            "url": "validURL"
+          },
+          "shouldUpdate": false
+        }
+      ]
+    
+}
+  
