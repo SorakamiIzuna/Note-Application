@@ -37,7 +37,7 @@ exports.postLogin = async (req, res) => {
         // Tạo token và lưu vào cookie
         const token = jwt.generateToken(user);
         res.cookie('token', token, { httpOnly: true });
-        res.redirect('/auth/dashboard');
+        res.redirect('/dashboard');
     } catch (error) {
         res.render('login', { error: 'An unexpected error occurred. Please try again later.' });
     }
@@ -45,5 +45,5 @@ exports.postLogin = async (req, res) => {
 
 exports.logout = (req, res) => {
     res.clearCookie('token'); // Xóa token trong cookie
-    res.redirect('/auth/login');
+    res.redirect('/');
 };
