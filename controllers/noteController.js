@@ -43,7 +43,7 @@ exports.addNoteForm = (req, res) => {
 
 // Create a new note
 exports.createNote = async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, time } = req.body;
   try {
     const user = req.user.username;
 
