@@ -27,18 +27,23 @@
       <button type="submit">Save</button>
     </form>
   </div>
+  <div class="home" id="homebtn"><a href="/dashboard">Back to Home</a></div>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        const submitButton = form.querySelector('button[type="submit"]');
+    document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const homebtn = document.querySelector('a');
+    const submitButton = form.querySelector('button[type="submit"]');
 
-        // Prevent page refresh on all clicks except on the submit button
-        document.body.addEventListener('click', function(event) {
-            if (event.target !== submitButton) {
-                event.preventDefault();  // Prevent default action (e.g., form submission)
+    // Prevent page refresh on all clicks except for the submit button or home button
+    document.body.addEventListener('click', function (event) {
+        if (event.target !== submitButton && event.target !== homebtn) {
+            const isInteractiveElement = ['BUTTON', 'A', 'INPUT'].includes(event.target.tagName);
+            if (!isInteractiveElement) {
+                event.preventDefault();
             }
-        });
+        }
     });
+});
 </script>
 </body>
 </html>

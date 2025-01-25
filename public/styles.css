@@ -230,3 +230,20 @@ nav a:hover::before {
 .form-container p{
   color:white;
 }
+.logo{
+  font-family: 'Reenie Beanie';
+  font-size: 40px;
+}
+.home{
+  font-family: 'Reenie Beanie';
+  display:flex;
+  margin-top:10px;
+  justify-content: center;
+  align-items: center;
+}
+.home a{
+  color:white;
+}
+.home a:hover{
+  color:blue;
+}
