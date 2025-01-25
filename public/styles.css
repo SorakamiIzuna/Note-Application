@@ -216,3 +216,17 @@ nav a:hover::before {
 .back-btn:hover {
   transform: scale(1.1);
 }
+#username{
+  border-radius: 5px;
+  height: 30px;
+}
+#password{
+  border-radius: 5px;
+  height: 30px;
+}
+.form-container button{
+  margin:20px;
+}
+.form-container p{
+  color:white;
+}
