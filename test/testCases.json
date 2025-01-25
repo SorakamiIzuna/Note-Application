@@ -1,7 +1,7 @@
 {
     "register": [
       {
-        "username": "newuser5",
+        "username": "newuser6",
         "password": "password123",
         "expectedStatus": 302,
         "expectedLocation": "/auth/login"
