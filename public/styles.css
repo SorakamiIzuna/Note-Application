@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
 @import url('https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap');
+
 body {
 	margin: 0;
 	background: #222;
 	font-family: 'Work Sans', sans-serif;
 	font-weight: 800;
+}
+
+a {
+  text-decoration: none;
 }
 
 .container {
@@ -110,6 +115,7 @@ nav a:hover::before {
     margin-top: auto; /* Push actions to the bottom */
     display: flex; /* Align links horizontally */
     gap: 5px; /* Add spacing between links */
+    font-size: 1.4rem;
   }
   
 .note .actions a {
@@ -136,6 +142,7 @@ nav a:hover::before {
 .note-list{
     display:flex;
     flex-wrap: wrap;
+    text-decoration: none;
 }
 .title{
     font-family: 'Reenie Beanie';
@@ -204,4 +211,8 @@ nav a:hover::before {
     border-radius: 5px;
     font-family: 'Reenie Beanie';
     font-size: 30px;
+}
+
+.back-btn:hover {
+  transform: scale(1.1);
 }

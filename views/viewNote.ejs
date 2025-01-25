@@ -5,21 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Note</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-    <h1>
-        <%=note.creator%>'s Note
-    </h1>
-    <label for="title">Title:</label>
-    <p>
-        <%=note.title%>
-    </p>
-    <label for="content">Content:</label>
-    <p>
-        <%=note.content%>
-    </p>
-    <a href="/dashboard">Back to Home</a>
+    <div style="display:flex; align-items: center; height:100vh; flex-direction:column;">
+        <h1 class="title" style="font-size: 4rem">
+            <%=note.creator%>'s Note
+        </h1>
+        <div class="note" style="gap: 20px;">
+            <div>
+                <label for="title" style="font-size: 2.4rem">Title:</label>
+                <p style="font-size: 2rem">
+                    <%=note.title%>
+                </p>
+            </div>
+            <div>
+                <label for="content" style="font-size: 2.4rem">Content:</label>
+                <p style="font-size: 2rem">
+                    <%=note.content%>
+                </p>
+            </div>
+        </div>
+        <div style="margin-top: 40px; padding: 5px 10px; background-color: rgb(255, 204, 0); font-size: 2rem; border: 2px solid black; border-radius: 5px; cursor: pointer" class="back-btn">
+            <a href="/dashboard" style="text-decoration: none;">Back to Home</a>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -23,14 +23,16 @@
   <div class="addbtn"><button><a href="/add"> + New Note</a></button></div>
   <ul class="note-list">
     <% notes.forEach(note => { %>
-      <li class="note">
-        <h2><%= note.title %></h2>
-        <p><%= note.content %></p>
-        <div class="actions">
-          <a href="/edit/<%= note._id %>">Edit</a>
-          <a href="/delete/<%= note._id %>">Delete</a>
-        </div>
-      </li>
+      <div>
+        <p class="title" style="font-size: 3.4rem; margin: 0"><%=note.creator%>'s Note</p>
+        <li class="note">
+          <h2><%= note.title %></h2>
+          <p><%= note.content %></p>
+          <div class="actions">
+            <a href="<%= note.url %>">View</a>
+          </div>
+        </li>
+      </div>
     <% }) %>
   </ul>
 </body>

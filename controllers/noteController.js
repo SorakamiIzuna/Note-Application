@@ -4,14 +4,35 @@ const share = require('../models/shareModels.js')
 const sharedNoteUrl = require('../models/tempURLModels.js');
 const cryptoUtils = require('../models/aes.js')
 const crypto = require('crypto');
-// Show all notes
+
+// Show notes without login
 exports.index = async (req, res) => {
-  try {
-    const notes = await Note.find();
-    res.render('index', { notes });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
+  const checkUser = req.cookies.token;
+  if (checkUser) {
+    return res.redirect('/dashboard');
+  }
+  else {
+    try {
+      const sharedNotes = await this.getSharedNote(null);
+      const decryptedSharedNotes = sharedNotes.map((note) => {
+        // Retrieve session key and IV
+        const sessionKey = Buffer.from(note.access_token, 'hex');
+        const uniqueKey = cryptoUtils.generateUniqueKeyForNote(sessionKey, note._id.toString());
+        const decryptedContent = cryptoUtils.decryptNote(
+          { encryptedNote: note.content, iv: note.iv },
+          uniqueKey
+        );
+
+        return {
+          ...note,
+          content: decryptedContent, // Replace encrypted content with decrypted content
+        }
+      });
+      res.render('index', { notes: decryptedSharedNotes });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    }
   }
 };
 

@@ -6,7 +6,7 @@ const { URL } = require('url');
 const shareNote = require('../models/shareModels.js');
 
 // SECRET_KEY có thể đổi thành khóa mã hóa
-const SECRET_KEY = "Cryptography"
+const SECRET_KEY = process.env.SECRET_KEY;
 
 // Hàm tạo URL tạm thời
 // Cần thêm dữ liệu khóa mã hóa ghi chú
@@ -54,7 +54,7 @@ const addURLToDatabase = async (noteId, iv) => {
                 url: url
             });
             const response = await newUrl.save();
-            console.log("Add URL: ", response);
+            return response;
         }
         else {
             const currentURL = note.url;
@@ -62,7 +62,6 @@ const addURLToDatabase = async (noteId, iv) => {
                 const newURL = generateURL(noteId, 3600, iv);
                 note.url = newURL;
                 const response = await note.save();
-                console.log("Update URL: ", response);
                 return response;
             }
         }

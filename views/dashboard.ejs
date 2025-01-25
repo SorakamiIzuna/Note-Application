@@ -38,9 +38,9 @@
     <li class="note">
         <h2><%= note.title %></h2>
         <p><%= note.content %></p>
-        <p><%= note.iv %></p>
-        <p><%= note.url %></p>
-        <a href="<%= note.url %>">View</a>
+        <div class="actions">
+          <a href="<%= note.url %>">View</a>
+        </div>
     </li>
       <% }) %>
     </ul>

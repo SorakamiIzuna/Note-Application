@@ -4,7 +4,7 @@ const Note = require('../models/noteModels.js');
 const noteController = require('../controllers/noteController');
 const authenticateToken = require('../middlewares/authMiddleware');
 
-router.get('/',noteController.index);
+router.get('/', noteController.index);
 router.get('/add',authenticateToken, noteController.addNoteForm);
 router.post('/add',authenticateToken, noteController.createNote);
 router.get('/edit/:id',authenticateToken, noteController.editNoteForm);
