@@ -207,7 +207,7 @@ nav a:hover::before {
 .form-container button{
     align-self: center;
     width:20vw;
-    height:40px;
+    min-height:40px;
     border-radius: 5px;
     font-family: 'Reenie Beanie';
     font-size: 30px;
